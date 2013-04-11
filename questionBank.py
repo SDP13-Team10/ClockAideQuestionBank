@@ -11,6 +11,10 @@ class QuestionBank:
 		global databaseLocation
 		global connection
 		global cursorObj
+		global randomHour
+		global randomMinute
+		randomHour = -1
+		randomMinute = -1
 		databaseLocation = pathToDB
 		connection = sqlite3.connect(databaseLocation)
 		cursorObj = connection.cursor()
@@ -32,14 +36,14 @@ class QuestionBank:
 			d = (difficulty,)
 			cursorObj.execute('SELECT * FROM questionBank WHERE difficulty=? ORDER BY RANDOM() LIMIT 1', d)
 			row = cursorObj.fetchone()
-			randomHour = str(row[1])
-			randomMinute = str(row[2])
+			randomHour = row[1]
+			randomMinute = row[2]
 
 	def getTimeString(self):
 		global randomHour
 		global randomMinute
 		hour = str(randomHour)
-		minute = str(row[2])
+		minute = str(randomMinute)
 		if minute == 0 or minute ==5:
 			minute = "0" + minute
 		return hour + "," + minute
